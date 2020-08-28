@@ -1,8 +1,8 @@
 # Projetos de Programas
 
-###Trabalho Final para a disciplina de Projetos de Programas
+### Trabalho Final para a disciplina de Projetos de Programas
 
-###Assunto: Implementação de um Sistema de adoção de cachorros necessitados
+### Assunto: Implementação de um Sistema de adoção de cachorros necessitados
 	Gostaríamos de criar um sistema para cadastrar e fazer o processo de adoção de cachorros recuperados das ruas
 
 No sistema deve ser possível:
@@ -17,7 +17,7 @@ No sistema deve ser possível:
 Os animais prontamente recolhidos serão cadastrados no sistema para ter um levantamento e diagnóstico dos veterinários sobre o animal. Quando o cachorro estiver devidamente tratado (caso necessário cuidados médicos após o resgate do animal), o status do animal será alterado para “pronto para adoção!”. Na hora da adoção (em feiras a serem realizadas pelos usuários do sistema) o futuro dono assinará um termo (por escrito a ser levado pelos usuários do sistema) de comprometimento de bem tratar o animal a ser adotado. Só então o processo de adoção será cadastrado no sistema, onde o status do animal será alterado para “adotado!”, junto com os dados da pessoa que o adotou.
 	A ficha do sistema contendo os dados da pessoa a adotar o animal permanecerá em branco até que o cachorro seja adotado.
 
-###Levantamento de Requisitos
+### Levantamento de Requisitos
 
 Funcionais:
     • O sistema deve permitir o usuário de cadastrar novos cachorros recolhidos (Nome [se houver], Sexo, Raça, Porte [indefinido, pequeno, médio, grande] , Idade [se houver], status [em tratamento, pronto para adoção e adotado] , descrição e observações e notas do veterinário).
