@@ -19,16 +19,16 @@ Os animais prontamente recolhidos serão cadastrados no sistema para ter um leva
 
 ### Levantamento de Requisitos
 
-Funcionais:
+1. Funcionais:
     - O sistema deve permitir o usuário de cadastrar novos cachorros recolhidos (Nome [se houver], Sexo, Raça, Porte [indefinido, pequeno, médio, grande] , Idade [se houver], status [em tratamento, pronto para adoção e adotado] , descrição e observações e notas do veterinário).
     - O sistema deve permitir ao usuário alterar o cadastro de alguns campos de um animal já cadastrado, como porte, status e campos de observações.
     - O sistema deve permitir ao usuário fazer o processo de adoção, assim preenchendo o campo vazio de dono do animal, com informações de nome do dono, endereço, CPF e telefone para contato.
     - O sistema deve permitir ao usuário listar todos os animais que estão com status indicando “pronto para ser adotado!”.
     - O sistema deve permitir ao usuário listar todos os animais que estão com status indicando “adotado”, bem como após isso listar as informações do novo dono.
     - O sistema deve permitir ao usuário excluir o registro de um animal.
-Não funcionais:
+2. Não funcionais:
     - O sistema poderá ser executado tanto em Windows quanto em Linux.
-Normativos:
+3. Normativos:
     - O campo de “informações do dono” deve permanecer em branco até o momento da adoção.
     - Apenas animais com status “pronto para adoção!” podem ser adotados.
     - As observações e notas do veterinário devem ser mantidas no cadastro do animal, e mostradas para o novo dono na hora da adoção.
