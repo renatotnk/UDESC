@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+   <meta charset ="utf-8">
+   <head>
+      <meta charset="utf-8">
+      <title></title>
+   </head>
+
+   <body>
+
+      <form action='validar.php' method="post">
+        <div class="subform">
+         <label>Nome: </label>
+         <input type='text' name="nome" placeholder="Digite seu nome" required>
+        </div>
+        <div class="subform">
+         <label>Senha: </label>
+         <input type='password' name="senha" placeholder="Digite sua senha" required>
+        </div>
+        <div class="subform">
+         <label>Masculino: </label>
+         <input type='radio' name='sexo'required>
+         <br>
+         <label>Feminino: </label>
+         <input type='radio' name='sexo'>
+         <br>
+         <label>Outro: </label>
+         <input type='radio' name='sexo'>
+        </div>
+
+        <div class="subform">
+         <select name="fruta" required>
+            <option disabled>Escolha uma opção...</option>
+            <option value="banana">Banana</option>
+            <option value="maca">Maçã</option>
+            <option value="laranja">Laranja</option>
+         </select>
+        </div>
+
+
+
+        <br>
+        <label>Sua mensagem:</label>
+        <br>
+        <textarea rows="5" cols="60" required></textarea>
+
+        <br>
+
+        <div class="subform">
+         <label>Concordo com os termos: </label>
+         <input type='checkbox' required>
+        </div>
+
+        <div class="subform">
+         <input type="submit" value='Enviar'>
+         <input type="reset" value='Limpar'>
+        </div>
+      </form>
+
+   </body>
+</html>
+</html>

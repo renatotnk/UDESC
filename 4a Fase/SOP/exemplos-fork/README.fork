@@ -1,0 +1,56 @@
+DESCRIÇÃO BREVE DOS EXEMPLOS DE fork()
+======================================
+
+fork-1
+
+  Processo pai cria um processo filho e espera o seu retorno.
+  Processo filho apenas imprime uma mensagem e encerra sua execução.
+
+
+fork-2
+
+  Processo filho executa um comando externo (/bin/ls) usando a chamada
+  execl(). O valor de retorno do filho, coletado pelo pai em waitpid(),
+  é o valor de retorno do comando.
+
+
+fork-3
+
+  Programa que mostra que os dados do processo filho são idênticos
+  aos do processo pai, mas são independentes.
+
+  A sequência de impressão é
+
+    pai: n=7
+    filho: n=7
+    filho: n=10
+    pai: n=7
+
+
+fork-4
+
+  Processo filho espera por uma string do teclado. Permite ver o que
+  acontece com um processo filho quando o processo pai é morto (kill).
+
+
+forkbomb
+
+  Programa que procria indefinidamente, e termina travando o sistema.
+  Use com cuidado :-)
+
+
+COMPILANDO E EXECUTANDO OS PROGRAMAS
+====================================
+
+Em sistemas Unix, o programa `fork-1.c' pode ser compilado com
+
+  $ cc -o fork-1 fork-1.c
+
+e executado com
+
+  $ ./fork-1
+
+(o $ é o prompt do shell, que pode variar entre sistemas)
+
+
+

@@ -1,0 +1,10 @@
+-- 1) CREATE VIEW Mecanicos (nome, funcao) AS SELECT nome, funcao FROM Mecanico
+-- 2) CREATE VIEW Tipo (modelo, marca) AS SELECT modelo, marca FROM Veiculo WHERE codc IS NOT NULL
+-- 3) CREATE VIEW Consertos (nomeMec, nomeCli, modeloVei, dataCon, horaCon) AS SELECT m.nome, cl.nome, v.modelo, co.data, co.hora FROM Mecanico m JOIN Conserto co USING (codm) JOIN Veiculo v USING (codv) JOIN Cliente cl USING (codc)
+-- 4) CREATE VIEW Rodados (ano, media) AS SELECT ano, AVG(quilometragem) FROM Veiculo GROUP BY (ano) ORDER BY ano ASC
+-- 5) CREATE VIEW contagemConsertos (nome, contConserto, dataCons) AS SELECT m.nome, COUNT(1), c.data FROM Mecanico m JOIN Conserto c USING (codm) GROUP BY (m.nome, c.data)
+-- 6) CREATE VIEW contagemSetor (nome, contSetor, dataSet) AS SELECT s.nome, COUNT(1), c.data FROM Mecanico m JOIN Setor s USING (cods) JOIN Conserto c USING (codm) GROUP BY(s.nome, c.data)
+-- 7) CREATE VIEW contagemFuncao (funcao, contFuncao) AS SELECT funcao, COUNT(1) FROM Mecanico WHERE funcao IS NOT NULL GROUP BY (funcao)
+-- 8) CREATE VIEW mecanicosAlocados (nome, funcao, codSetor, nomeSetor) AS SELECT m.nome, m.funcao, s.cods, s.nome FROM Mecanico m JOIN Setor s USING (cods) WHERE m.cods IS NOT NULL
+-- 9) CREATE VIEW contagemFunCon (nomeFuncao, contFunCon) AS SELECT m.funcao, COUNT(1) FROM Mecanico m JOIN Conserto c USING (codm) GROUP BY (m.funcao)
+

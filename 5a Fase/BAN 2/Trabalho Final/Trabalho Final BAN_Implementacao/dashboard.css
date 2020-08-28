@@ -1,0 +1,67 @@
+body{
+  background-color: #F6F6F6  !important;
+}
+
+.photo {
+    display: table;
+}
+.photo a {
+    vertical-align: middle;
+    display: table-cell;
+}
+.photo img {
+    display: block;
+    height: auto;
+    width: 25%;
+}
+
+.agenda {  }
+.agenda .agenda-date { width: 170px; }
+.agenda .agenda-date .dayofmonth {
+  width: 40px;
+  font-size: 36px;
+  line-height: 36px;
+  float: left;
+  text-align: right;
+  margin-right: 10px;
+}
+.agenda .agenda-date .shortdate {
+  font-size: 0.75em;
+}
+.agenda .agenda-time { width: 140px; }
+.agenda .agenda-events {  }
+.agenda .agenda-events .agenda-event {  }
+
+@media (max-width: 767px) {
+
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}

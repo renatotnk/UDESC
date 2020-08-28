@@ -1,0 +1,1 @@
+./Compiler.o *.pam

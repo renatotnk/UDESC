@@ -1,0 +1,152 @@
+-- 3) Gatilho para atribuir um cods (sequencial) para um novo setor inserido.
+CREATE SEQUENCE seq_cods START 10;
+
+CREATE FUNCTION seq_cods_setor() RETURNS TRIGGER AS 
+$$
+BEGIN	
+	NEW.cods = nextval('seq_cods');
+    RETURN NEW; 	
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER seq_cods_setor BEFORE INSERT ON setor
+	FOR EACH ROW EXECUTE PROCEDURE seq_cods_setor();
+
+insert into setor values (null, 'teste2');
+
+SELECT * FROM SETOR    
+
+-- 4) Gatilho para impedir a inserção de um mecânico ou cliente com CPF inválido.
+
+CREATE OR REPLACE FUNCTION valida_cpf(pcpf varchar(11)) RETURNS boolean AS
+$$
+DECLARE
+	cpf_int int [11];
+    digito_1 int;
+    digito_2 int;
+BEGIN
+	FOR cont IN 1..11 LOOP
+		cpf_int[cont] := CAST (SUBSTRING(pcpf, cont, 1) AS integer);
+    END LOOP;
+    
+    digito_1 := 0;
+    FOR cont IN 1..9 LOOP
+    	digito_1 := digito_1 + cpf_int[cont] * (11 - cont);
+    END LOOP;
+    
+    digito_1 := digito_1 % 11;
+    
+    IF digito_1 < 2 THEN
+    	digito_1 := 0;
+    END IF;
+    
+    IF digito_1 != cpf_int[10] THEN
+    	RETURN false;
+    END IF;   
+    
+
+    digito_2 := 0;
+    FOR cont IN 1..10 LOOP
+    	digito_2 := digito_2 + cpf_int[cont] * (12 - cont);
+    END LOOP;
+    
+    digito_2 := digito_2 % 11;
+    
+    IF digito_2 < 2 THEN
+    	digito_2 := 0;
+    ELSE 
+    	digito_2 := 11 - digito_2;
+    END IF;
+  
+    IF digito_2 != cpf_int[11] THEN
+    	RETURN false;
+    END IF; 
+  
+    RETURN true;
+
+END;
+$$
+LANGUAGE plpgsql;
+
+-- ############################################################################################################# --
+
+CREATE OR REPLACE FUNCTION verificaCPF() RETURNS TRIGGER AS
+$$
+BEGIN
+	IF(valida_CPF(NEW.cpf)) THEN
+    	RETURN NEW;
+    ELSE
+    	RAISE EXCEPTION  'CPF inválido';
+   	END IF;
+    RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER verificaCPF BEFORE INSERT OR UPDATE ON cliente 
+	FOR EACH ROW EXECUTE PROCEDURE verificaCPF();
+    
+INSERT INTO cliente VALUES(11, '11111111111', 'Ana', 20, 'América', 'Joinville');
+
+-- 5) Gatilho para impedir que um mecânico seja removido caso não exista outro mecânico com a mesma função.
+
+CREATE OR REPLACE FUNCTION remove_mecanico() RETURNS TRIGGER AS 
+$$
+BEGIN
+	IF ((SELECT COUNT(cods) FROM mecanico WHERE funcao = OLD.funcao) = 0)THEN 
+    	RAISE EXCEPTION 'Não é possível excluir o mecânico, não há substitútos';
+    END IF;
+    RETURN NULL;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER remove_mecanico AFTER DELETE ON mecanico 
+	FOR EACH ROW EXECUTE PROCEDURE remove_mecanico();
+ 
+DELETE FROM mecanico WHERE codm = 1
+
+-- 6)  Gatilho que ao inserir, atualizar ou remover um mecânico, reflita as mesmas modificações na tabela de Cliente.
+-- Em caso de atualização, se o mecânico ainda não existir na tabela de Cliente, deve ser inserido.
+
+CREATE SEQUENCE seq_codc START 20;
+
+CREATE OR REPLACE FUNCTION atualiza_mecanico() RETURNS TRIGGER AS 
+$$
+DECLARE
+vcodc int DEFAULT 0;
+BEGIN
+	IF tg_op = 'INSERT 'THEN
+    	INSERT INTO cliente VALUES(next_val('seq_codc'), new.cpf, new.nome, new.idade, new.endereco , new.cidade);
+        
+    ELSIF tg_op = 'DELETE' THEN
+    	IF (SELECT codc INTO vcodc FROM cliente WHERE cpf = old.cpf) THEN
+        	DELETE FROM cliente WHERE cpf = old.cpf;
+     	END IF;
+        
+    ELSIF tg_op = 'UPDATE' THEN
+    	SELECT codc INTO vcodc FROM cliente WHERE cpf = old.cpf;
+        raise NOTICE 'codc = %', vcodc;
+        IF (vcodc <> NULL) THEN
+        		UPDATE cliente SET
+            		nome = new.nome,
+                	idade = new.idade,
+                	endereco = new.endereco,
+                	cidade = new.cidade
+            	WHERE codc = vcodc;
+        ELSE 
+        	INSERT INTO cliente VALUES(next_val('seq_codc'), new.cpf, new.nome, new.idade, new.endereco , new.cidade);
+       	END IF; 
+    END IF;
+    RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER atualiza_mecanico BEFORE INSERT OR UPDATE OR DELETE ON mecanico 
+	FOR EACH ROW EXECUTE PROCEDURE atualiza_mecanico();
+
+INSERT INTO mecanico VALUES(5945, '22233344405', 'João', 40, 'America', 'Joinville');
+
+UPDATE mecanico set idade 

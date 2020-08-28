@@ -1,0 +1,21 @@
+############ ARTIGOS ###################
+https://www.fsl.cs.sunysb.edu/project-fsbench.html
+https://journalofcloudcomputing.springeropen.com/articles/10.1186/2192-113X-2-6
+https://ieeexplore.ieee.org/abstract/document/7436941
+https://ieeexplore.ieee.org/abstract/document/6899177
+https://ieeexplore.ieee.org/abstract/document/7433780
+https://dl.acm.org/citation.cfm?id=258689
+
+
+############### MATERIAIS INTERESSANTES #######################
+https://indico.cern.ch/event/304944/contributions/1672715/attachments/578894/797101/dfs.pdf
+
+https://www.openstack.org/assets/marketing/OpenStackandHPCforscientificresearch-printformat.pdf
+
+
+############ TUTORIAIS #################
+https://en.wikipedia.org/wiki/Object_storage#Cloud_storage
+https://en.wikipedia.org/wiki/Ceph_(software)
+https://ceph.com/
+https://docs.openstack.org/python-swiftclient/latest/introduction.html
+https://rally.readthedocs.io/en/latest/quick_start/tutorial/step_0_installation.html

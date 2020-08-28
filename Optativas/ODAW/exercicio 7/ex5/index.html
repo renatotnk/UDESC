@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Sort Incrivel</title>
+   </head>
+   <body onload="incrivel_sort(prompt('Entre com numeros separados por espaço.'))">
+
+   </body>
+
+   <script type="text/javascript">
+         function incrivel_sort(numeros_string){
+            numeros_string = numeros_string.replace("  ", " ").trim();
+            lista_numeros = numeros_string.split(" ");
+            lista_numeros = lista_numeros.map(numStr => parseInt(numStr));
+            lista_numeros.sort(function (a, b) {return a - b;});
+            alert(lista_numeros);
+            console.log(lista_numeros);
+         }
+   </script>
+</html>

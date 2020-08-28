@@ -1,0 +1,14 @@
+int var1 10
+int var2 30
+int var3 400
+load reg1 var1
+load reg2 var2
+add reg1 reg2
+store var1 reg1
+load reg1 var3
+mul reg1 reg1
+store var3 reg2
+rem var1 0
+rem var2 0
+rem var3 0
+shutdown

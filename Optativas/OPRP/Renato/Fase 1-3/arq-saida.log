@@ -1,0 +1,72 @@
+
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+ 		#####  	 Leitura das matrizes A e B (1000x1000-mat.map)  	 #####
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+ 		##### 	 Operações de soma ##### 	 
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+
+ ##### somar_t0 de Matrizes (A + A) #####
+
+ ##### somar_t1 de Matrizes (A + A) #####
+
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+ 		#### 	 Operações de multiplicação (Sequencial) #### 	 
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+
+ ##### multiplicar_t0 de Matrizes #####
+
+ ##### multiplicar_t1 de Matrizes #####
+
+ ##### multiplicar_t0 de Matrizes (bloco) #####
+
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+ 		#### 	 Operações de multiplicação (Paralelo) 	 #### 
+ 		%%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%% %%%%%%
+
+ ##### multiplicarTh_t0 de Matrizes #####
+	Número de tarefas = 8
+
+ ##### multiplicar_omp0 de Matrizes #####
+	Número de tarefas = 8
+
+ ##### multiplicar_t0 de Matrizes (bloco OMP) #####
+	Número de tarefas = 8
+
+ ##### Multiplicação de Matrizes (bloco MPI) #####
+	Número de tarefas = 8
+
+ ##### ##### ##### ##### ##### ##### ##### ##### #####
+
+ #####       RELATÓRIO FINAL DAS EXECUÇÕES       #####
+
+ ##### ##### ##### ##### ##### ##### ##### ##### #####
+
+ ##### Comparação dos resultados da adição de matrizes #####
+	 Tempo de execução 1 : 0.0080
+	[soma_t0 vs soma_t1]		VERIFICADO: Matrizes idênticas
+
+ ##### Comparação dos resultados da Multiplicação de matrizes #####
+	 Tempo de execução 1 : 2.1487
+	[mult_t0 vs mult_t1]		VERIFICADO: Matrizes idênticas
+
+ ##### Comparação dos resultados da Multiplicação de matrizes bloco #####
+	 Tempo de execução 1 : 2.4427
+	[mult_t0 vs mult_SeqBl0]		VERIFICADO: Matrizes idênticas
+
+ ##### Comparação dos resultados da Multiplicação de matrizes (thread) #####
+	 Tempo de execução 8 : 0.6252
+	[mult_t0 vs mult_tTh]		VERIFICADO: Matrizes idênticas
+
+ ##### Comparação dos resultados da Multiplicação de matrizes (OMP) #####
+	 Tempo de execução 8 : 0.6425
+	[mult_t0 vs mult_tOmp0]		VERIFICADO: Matrizes idênticas
+
+ ##### Comparação dos resultados da Multiplicação de matrizes (blocoOMP) #####
+	 Tempo de execução 8 : 0.9105
+	[mult_t0 vs mult_tBlOmp0]		VERIFICADO: Matrizes idênticas
+
+ ##### Comparação dos resultados da Multiplicação de matrizes (bloco MPI) #####
+	 Tempo de execução 8 : 3.5335
+	[mult_t0 vs mult_tMPI0]		VERIFICADO: Matrizes idênticas

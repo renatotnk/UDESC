@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Sem Repetições</title>
+   </head>
+   <body>
+      <div class="semrepetir">
+         <input type="text" id="texto" placeholder="Insira aqui seu texto...">
+         <br>
+         <button onclick="remove_repetidos();">Remover Repetidos</button>
+      </div>
+
+      <script type="text/javascript">
+         function remove_repetidos(){
+            var campo = document.getElementById("texto");
+            var msg = campo.value;
+            var msg_set = new Set(msg);
+            campo.value = Array.from(msg_set).join('');
+         }
+      </script>
+   </body>
+</html>

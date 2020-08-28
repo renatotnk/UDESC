@@ -1,0 +1,181 @@
+CREATE OR REPLACE FUNCTION insere_setor(pcods int, pnome varchar(50)) RETURNS void 
+AS
+$$
+	INSERT INTO setor VALUES (pcods,pnome);
+$$
+LANGUAGE sql;
+
+SELECT insere_setor(5, 'Estofaria');
+SELECT * FROM setor;
+
+CREATE OR REPLACE FUNCTION exclue_setor(pcods int) RETURNS void 
+AS
+$$
+	DELETE FROM setor WHERE cods = pcods;
+$$
+LANGUAGE sql;
+
+-- SELECT exclue_setor(1);
+-- SELECT * FROM setor;
+
+
+-- 2 **CONSERTAR**
+
+CREATE OR REPLACE FUNCTION insere_exclue_mecanico(op int, pcodm int, pcpf varchar(11), pnome varchar(50), pidade int,
+                                                 pendereco varchar(100), pcidade varchar(100), pfuncao varchar(50), pcods int) RETURNS int 
+AS
+$$
+DECLARE
+linhas RECORD;
+BEGIN
+	IF op = 1 THEN
+    	INSERT INTO mecanico VALUES (pcodm, pcpf, pnome, pidade, pendereco, pcidade, pfuncao, pcods);
+    ELSIF op = 2 THEN
+    	DELETE FROM mecanico WHERE codm = pcodm;
+    ELSE
+    	raise EXCEPTION 'Operacao invalida';
+    END IF;
+	GET DIAGNOSTICS linhas = row_count;
+    RETURN linhas;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+-- 6
+CREATE OR REPLACE FUNCTION calcula_media_idade() RETURNS float AS
+$$
+DECLARE
+	soma_quant int := 0;
+    soma_idades int := 0;
+    v_idade int;
+    media float;
+BEGIN
+	FOR v_idade in SELECT idade FROM mecanico LOOP
+    	soma_idades := soma_idades + v_idade;
+        soma_quant := soma_quant + 1;
+    END LOOP;
+    FOR v_idade in SELECT idade FROM cliente LOOP
+    	soma_idades := soma_idades + v_idade;
+        soma_quant := soma_quant + 1;
+    END LOOP;
+    media := soma_idades / soma_quant;
+    RETURN media;
+END;
+$$
+LANGUAGE plpgsql;
+
+SELECT calcula_media_idade();
+
+-- 6 Alternativo
+
+CREATE OR REPLACE FUNCTION calcula_media_idade() RETURNS float AS
+$$
+DECLARE
+	soma_idade_mec int := 0;
+    soma_idade_cli int := 0;
+    quant_mec int := 0;
+    quant_cli int := 0;
+    media float;
+BEGIN
+	SELECT SUM(idade) into soma_idade_mec FROM mecanico;
+    SELECT SUM(idade) into soma_idade_cli FROM cliente;
+    SELECT count(codm) into quant_mec FROM mecanico;
+    SELECT count(codc) into quant_cli FROM cliente;   	
+    media := (soma_idade_mec + soma_idade_cli) / (quant_mec + quant_cli);
+    RETURN media;
+END;
+$$
+LANGUAGE plpgsql;
+
+SELECT calcula_media_idade();
+
+-- 8)  Considerando que na tabela Cliente apenas codc é a chave primária, faça uma função que 
+-- remova clientes com CPF repetido, deixando apenas um cadastro para cada CPF. Escolha o critério
+-- que preferir para definir qual cadastro será mantido: aquele com a menor idade, que possuir mais
+-- consertos agendados, etc. Para testar a função, não se esqueça de inserir na tabela 
+-- alguns clientes com este problema.
+
+-- SELECT cpf FROM cliente GROUP BY cpf HAVING count(codc) > 1;
+-- INSERT INTO cliente VALUES 
+-- (10,'20000200000', 'Ana Paula', 20, 'América','Joinville'),
+-- (11,'20000220000', 'Paulo Cesar', 24 , 'Saguaçu', 'Joinville')
+
+CREATE OR REPLACE FUNCTION elimina_repetidos() RETURNS void AS
+$$
+DECLARE
+	cpf_repetido varchar(11);
+    vcodc int;
+    cont int;
+BEGIN
+	FOR cpf_repetido IN (SELECT cpf FROM cliente GROUP BY cpf HAVING count(codc) > 1) LOOP
+    	RAISE NOTICE '%, ', cpf_repetido;
+        cont := 0;
+        FOR vcodc IN (SELECT codc FROM cliente WHERE cpf = cpf_repetido ORDER BY codc) LOOP
+        	IF (cont > 0) THEN
+            	DELETE FROM cliente WHERE codc = vcodc;
+            END IF;
+            cont := cont + 1;
+        END LOOP;
+    END LOOP;
+END;
+$$
+LANGUAGE plpgsql;
+
+SELECT elimina_repetidos();
+SELECT cpf FROM cliente GROUP BY cpf HAVING count(codc) > 1;
+
+-- 9 Função para calcular se o CPF é válido
+
+CREATE OR REPLACE FUNCTION valida_cpf(pcpf varchar(11)) RETURNS boolean AS
+$$
+DECLARE
+	cpf_int int [11];
+    digito_1 int;
+    digito_2 int;
+BEGIN
+	FOR cont IN 1..11 LOOP
+		cpf_int[cont] := CAST (SUBSTRING(pcpf, cont, 1) AS integer);
+    END LOOP;
+    
+    digito_1 := 0;
+    FOR cont IN 1..9 LOOP
+    	digito_1 := digito_1 + cpf_int[cont] * (11 - cont);
+    END LOOP;
+    
+    digito_1 := digito_1 % 11;
+    
+    IF digito_1 < 2 THEN
+    	digito_1 := 0;
+    END IF;
+    
+    IF digito_1 != cpf_int[10] THEN
+    	RETURN false;
+    END IF;   
+    
+
+    digito_2 := 0;
+    FOR cont IN 1..10 LOOP
+    	digito_2 := digito_2 + cpf_int[cont] * (12 - cont);
+    END LOOP;
+    
+    digito_2 := digito_2 % 11;
+    
+    IF digito_2 < 2 THEN
+    	digito_2 := 0;
+    ELSE 
+    	digito_2 := 11 - digito_2;
+    END IF;
+  
+    IF digito_2 != cpf_int[11] THEN
+    	RETURN false;
+    END IF; 
+  
+    RETURN true;
+
+END;
+$$
+LANGUAGE plpgsql;
+
+SELECT valida_cpf('06980181920');
+

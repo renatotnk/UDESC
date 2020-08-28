@@ -1,0 +1,7 @@
+############# Unsigned int: ############# 
+text	   data	    bss	    dec	    hex	filename
+    232	      0	      0	    232	     e8	led_int
+
+############## Double: ################### 
+text	   data	    bss	    dec	    hex	filename
+    728	      0	      0	    728	    2d8	led_double

@@ -1,0 +1,150 @@
+a)
+-- CREATE TABLE Setor(
+	cods CHAR(10) PRIMARY KEY,
+	nome VARCHAR(20)
+);
+
+-- CREATE TABLE Mecanico(
+	codm CHAR(10) PRIMARY KEY,
+	cpf CHAR(11),
+	nome VARCHAR(20),
+	idade INTEGER,
+	cidade VARCHAR(20),
+	funcao VARCHAR(20),
+	FOREIGN KEY(cods) REFERENCES Setor ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Veiculo(
+	codv CHAR(10) PRIMARY KEY,
+	renavam VARCHAR(15),
+	modelo VARCHAR(10),
+	marca VARCHAR(20),
+	ano INTEGER,
+	quilometragem INTEGER,
+	FOREIGN KEY(codc) REFERENCES Cliente ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Cliente(
+	codc CHAR(10) PRIMARY KEY,
+	cpf CHAR(11),
+	nome VARCHAR(20),
+	idade INTEGER,
+	endereco VARCHAR(40),
+	cidade VARCHAR(20)
+);
+
+-- CREATE TABLE Conserto(
+	codm CHAR(10),
+	codv CHAR(10),
+	data DATE,
+	hora HOUR,
+	PRIMARY KEY(codm,codv,data),
+	FOREIGN KEY(codm) REFERENCES Mecanico,
+	FOREIGN KEY(codv) REFERENCES Veiculo
+);
+
+
+
+b)
+-- CREATE TABLE Curso(
+	sigla_curso CHAR(10) PRIMARY KEY,
+	nome VARCHAR(100),
+	titulacao VARCHAR(100)
+);
+
+-- CREATE TABLE Inscricao(
+	matricula INTEGER PRIMARY KEY,
+	sigla_curso CHAR(10),
+	cpf CHAR(11),
+	FOREIGN KEY(sigla_curso) REFERENCES Curso ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(cpf) REFERENCES Aluno ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Matricula(
+	ano DATE ,
+	matricula INTEGER,
+	sigla_disc CHAR(10),
+	semestre INTEGER,
+	PRIMARY KEY(ano, matricula, sigla_disc, semestre),
+	FOREIGN KEY(matricula) REFERENCES Inscricao ON DELETE NO ACTION ON UPDATE CASCADE,
+	FOREIGN KEY(sigla_disc) REFERENCES Disciplina ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Disciplina(
+	sigla_disc CHAR(10) PRIMARY KEY,
+	nome VARCHAR(10),
+	carga_horaria INTEGER
+);
+
+-- CREATE TABLE Aluno(
+	cpf CHAR(11) PRIMARY KEY,
+	nome VARCHAR(100),
+	rua VARCHAR(255),
+	numero INTEGER,
+	estado CHAR(2),
+	cidade VARCHAR(100),
+	cep INTEGER
+);
+
+-- CREATE TABLE Grade(
+	sigla_curso CHAR(10),
+	sigla_disc CHAR(10),
+	PRIMARY KEY(sigla_curso, sigla_disc)
+	FOREIGN KEY(sigla_curso) REFERENCES Curso ON DELETE NO ACTION ON UPDATE CASCADE
+	FOREIGN KEY(sigla_disc) REFERENCES Disciplina ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Requisito(
+	sigla_disc_req CHAR(10),
+	sigla_curso_req CHAR(10),
+	sigla_disc CHAR(10),
+	sigla_curso CHAR(10),
+	PRIMARY KEY(sigla_disc_req,sigla_curso_req,sigla_disc,sigla_curso),
+	FOREIGN KEY(sigla_disc_req) REFERENCES Grade,
+	FOREIGN KEY(sigla_curso_req) REFERENCES Grade,
+	FOREIGN KEY(sigla_disc) REFERENCES Grade,
+	FOREIGN KEY(sigla_curso) REFERENCES Grade
+);
+
+-- CREATE TABLE Professor(
+	reg_mec INTEGER PRIMARY KEY,
+	nome VARCHAR(100),
+	rua VARCHAR(255),
+	numero INTEGER,
+	estado CHAR(2),
+	cidade VARCHAR(100),
+	cep INTEGER
+);
+
+-- CREATE TABLE Titulo(
+	reg_mec INTEGER,
+	cod_area INTEGER,
+	data_da_titulacao DATE,	
+	PRIMARY KEY(reg_mec, cod_area),
+	FOREIGN KEY(reg_mec) REFERENCES Professor ON DELETE NO ACTION ON CASCADE UPDATE,
+	FOREIGN KEY(cod_area) REFERENCES Area ON DELETE NO ACTION ON CASCADE UPDATE
+);
+
+-- CREATE TABLE Area(
+	cod_area INTEGER PRIMARY KEY,
+	descricao VARCHAR(100)
+);
+
+-- CREATE TABLE Leciona(
+	sigla_disc CHAR(10),
+	reg_mec INTEGER,
+	ano DATE,
+	semestre INTEGER,
+	PRIMARY KEY(sigla_disc, reg_mec, ano, semestre),
+	FOREIGN KEY(sigla_disc) REFERENCES Disciplina ,
+	FOREIGN KEY(reg_mec) REFERENCES Professor
+);
+
+-- CREATE TABLE Habilitacao(
+	sigla_disc CHAR(10),
+	reg_mec INTEGER,
+	PRIMARY KEY(sigla_disc,reg_mec),
+	FOREIGN KEY(sigla_disc) REFERENCES Disciplina,
+	FOREIGN KEY(reg_mec) REFERENCES Professor,
+
+);

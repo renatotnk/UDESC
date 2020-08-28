@@ -1,0 +1,8 @@
+-- 1) SELECT p.*, d.nome FROM Professor p JOIN Departamento d ON (p.codigoDepartamento = d.codigo)WHERE d.nome = upper('ciência da computação')
+-- 2) SELECT p.nome, p.cpf, p.logradouro, d.nome FROM Professor p JOIN Departamento d ON (p.codigoDepartamento = d.codigo)WHERE d.nome = upper('administração')
+-- 3) SELECT d.nome FROM Disciplina d JOIN Curso c ON (d.codigocurso = c.codigo) WHERE c.nome IN (UPPER('Ciência da Computação'), UPPER('Fisica'))
+-- 4) SELECT m.anosemestre, m.numerosemestre, a.matricula, a.nome, d.codigo, d.nome, c.codigo FROM Aluno a JOIN Matricula m ON(a.matricula = m.matriculaaluno)  JOIN Disciplina d ON (m.codigoCurso = d.codigoCurso AND m.codigoDisciplina = d.codigo) JOIN Curso c ON (d.codigoCurso = c.codigo) WHERE UPPER(d.nome) = UPPER('Engenharia de Software') AND UPPER(c.nome) = upper('Ciência da Computação') AND m.anosemestre = '2012' AND m.numerosemestre = '2'
+-- 5) SELECT c.nome, d.nome, m.anosemestre, m.numerosemestre, count(1)  FROM Matricula m JOIN Disciplina d ON (m.codigoCurso = d.codigoCurso AND m.codigoDisciplina = d.codigo) JOIN curso c ON (d.codigoCurso = c.codigo) WHERE UPPER(c.nome) = UPPER('Ciência da Computação') AND UPPER(d.nome) = UPPER('Banco de Dados II') GROUP BY (m.anosemestre, m.numeroSemestre, c.nome, d.nome)
+-- 6) SELECT p.nome, p.cpf ,m.anosemestre, m.numerosemestre,  count(1) FROM Professor p JOIN Vinculo v ON (p.cpf = v.cpfProfessor) JOIN Disciplina d ON (v.codigoDisciplina = d.codigo AND d.codigoCurso = v.codigoCurso) JOIN Matricula m ON(d.codigoCurso = m.codigoCurso AND m.codigoDisciplina = d.codigo) WHERE m.notaFinal < 7 GROUP BY (p.nome,p.cpf, m.anosemestre, m.numerosemestre) HAVING COUNT(1) > 2
+
+

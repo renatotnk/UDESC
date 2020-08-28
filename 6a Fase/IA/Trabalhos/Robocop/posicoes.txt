@@ -1,0 +1,6 @@
+agente 21 21
+bateria 23 17
+braco 11 35
+bomba 18 14
+refr 2 21
+pneum 10 10

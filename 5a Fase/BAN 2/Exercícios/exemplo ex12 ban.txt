@@ -1,0 +1,6 @@
+-- 2)
+CREATE INDEX idx_mec_funcao ON mecanico USING BTREE(funcao)
+
+-- 3)
+CREATE INDEX idx_cons_data_hora ON conserto USING BTREE(data, hora)
+

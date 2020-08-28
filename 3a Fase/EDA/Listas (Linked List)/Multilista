@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "Lista.h"
+
+int main(){
+int lin,col,i,j,x;
+  printf("Quantas linhas e colunas??\n");
+  scanf("%d %d",&lin,&col);
+  Lista multi;
+  inicializa_lista(&multi,sizeof(Lista));
+  for(i = 0; i < lin; i++){
+    Lista sub;
+    inicializa_lista(&sub,sizeof(int));
+    for(j = 0; j < col; j++){
+      printf("%d %d = ",i+1,j+1);
+      scanf("%d",&x);
+      insereNoFim(&sub,&x);
+    }
+  insereNoFim(&multi,&sub);
+  }
+  for(i = 0; i < lin; i++){
+    Lista sub;
+    leNaPosicao(&multi,&sub,i);
+    for(j = 0;j < col; j++){
+      leNaPosicao(&sub,&x,j);
+      printf("%4d",x);
+    }
+  printf("\n");
+  }
+  for(i = 0; i < lin; i++){
+    Lista sub;
+    leNaPosicao(&multi,&sub,i);
+    limpaLista(&sub);
+  limpaLista(&multi);
+  }
+
+}

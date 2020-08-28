@@ -1,0 +1,60 @@
+1) Sim, pois o grafo não possui ciclos, portanto, pode ser serializável.
+2) 
+Serializáveis:
+r1(X), w1(X), r2(X), w2(X), r1(Y), w1(Y)
+r2(X), w2(X), r1(X), w1(X), r1(Y), w1(Y)
+r1(X), w1(X), r1(Y), w1(Y), r2(X), w2(X)
+
+Não-Serializáveis:
+r1(X), r2(X), w1(X), w2(X), r1(Y), w1(Y)
+r1(X), r2(X), w2(X), w1(X), r1(Y), w1(Y)
+r2(X), r1(X), w2(X), w1(X), r1(Y), w1(Y)
+r2(X), r1(X), w1(X), w2(X), r1(Y), w1(Y)
+
+3)
+
+1. Serializável, com planos r1(X),w1(X),r3(X),w3(X),r2(X) 
+2. Serializável, com planos r1(X),w1(X),r3(X),w3(X),r2(X) 
+3. Não-Serializável
+4. Não-Serializável
+
+4)
+
+S1: Não serializavel, plano equivalente serial: r1(x), r2(z), w1(x), r3(x), r2(y), w2(z), r1(z), w2(y), r3(y), w3(y)
+
+S2: Não serializavel, plano equivalente serial: r2(z), r2(y), w2(z), w2(y), r1(x), r1(z), w1(x), r3(x), r3(y), w3(y)
+
+5)S1: É visão serializável
+  S2: NÃO é visão serializável
+
+
+
+S1:
+read(x)
+	read(z)
+read(z)
+write(x)
+	read(y)
+		read(x)
+	write(y)
+	write(z)
+		read(y)
+		write(y)
+c1
+	c2
+		c3
+
+S2:
+read(x)
+	read(z)
+		read(x)
+read(z)
+	read(y)
+		read(y)
+write(x)
+	write(z)
+		write(y)
+	write(y)
+c1
+	c2
+		c3

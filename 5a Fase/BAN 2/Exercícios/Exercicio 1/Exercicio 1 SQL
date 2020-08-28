@@ -1,0 +1,56 @@
+a)
+-- CREATE TABLE Cliente (
+	cpf CHAR(11) PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	sobrenome VARCHAR(100) NOT NULL,
+	rua VARCHAR(100),
+	numero INTEGER,
+	cidade VARCHAR(100))
+);
+
+-- CREATE TABLE Telefone(
+	cpf CHAR(11),
+	id_fone INTEGER,
+	numero CHAR(13),
+	tipo VARCHAR(20),
+	PRIMARY KEY(cpf,id_fone),
+	FOREIGN KEY(cpf REFERENCES Cliente ON DELETE CASCADE ON UPDATE CASCADE)	
+);
+
+-- CREATE TABLE Emprestimo(
+	id_emp INT PRIMARY KEY, 
+	data_emp DATE,
+	cpf CHAR(11),
+	FOREIGN KEY(cpf) REFERENCES Cliente ON DELETE NO ACTION ON UPDATE CASCADE 
+);
+
+-- ALTER TABLE Emprestimo
+	add data_devolucao DATE;
+
+-- CREATE TABLE Item(
+	id_item SERIAL PRIMARY KEY,		
+	tipo VARCHAR(20),
+);
+
+-- CREATE TABLE Fita(
+	id_fita INT PRIMARY KEY, 
+	parte INT,
+	FOREIGN KEY (id_fita) REFERENCES Item ON DELETE NO ACTION ON UPDATE CASCADE
+--);
+
+-- CREATE TABLE Vinil(
+	id_vinil INT PRIMARY KEY,
+	nome VARCHAR(100),
+	n_musicas INT,
+	FOREIGN KEY (id_vinil) REFERENCES Item ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Item_Emp(
+	id_emp INT,
+	id_item INT,
+	data_dev DATE,
+	PRIMARY KEY(id_emp, id_item),
+	FOREIGN KEY(id_emp) REFERENCES Emprestimo,
+	FOREIGN KEY(id_item) REFERENCES Item
+);
+

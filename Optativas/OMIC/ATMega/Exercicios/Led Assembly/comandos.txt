@@ -1,0 +1,3 @@
+avr-gcc -Wall -Os -mmcu=atmega328p -o led led.s
+
+avrdude -b 9600 -p m328p -c usbasp -e -U flash:w:led

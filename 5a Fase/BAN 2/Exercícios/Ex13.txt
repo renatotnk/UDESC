@@ -1,0 +1,114 @@
+-- Ex.13
+CREATE TYPE t_tratamento AS (
+	data date,
+    descricao varchar(100)
+);
+
+
+
+
+CREATE TYPE t_veterinario AS (
+	crm int,
+	nome varchar(100),
+    convenio varchar(50)
+);
+
+
+
+
+CREATE TABLE veterinario OF t_veterinario;
+ALTER TABLE veterinario ADD PRIMARY KEY (crm);
+
+
+
+
+CREATE TABLE Animal (
+	identificacao int PRIMARY KEY,
+    nome varchar(50),
+	raca varchar(50),	
+    sexo char(1)
+);
+
+
+
+
+CREATE TABLE consulta (
+	crm int,
+	identificacao int,
+    data date,
+    resultado text,
+    -- Aqui resolvemos a entidade fraca e seu relacionamento
+    tratamento t_tratamento[], 
+    primary key (crm, identificacao, data),
+    foreign key (crm) REFERENCES veterinario ON DELETE CASCADE ON UPDATE CASCADE,
+    foreign key (identificacao) REFERENCES Animal ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+
+CREATE TABLE matriz (
+    PRIMARY KEY (identificacao)
+) inherits (animal);
+
+
+
+
+CREATE TABLE reprodutor (
+	PRIMARY KEY (identificacao)
+) inherits (animal);
+
+
+
+
+CREATE TABLE cobertura(
+	id_matriz int,
+    id_reprodutor int,
+    PRIMARY KEY (id_matriz,id_reprodutor),
+    FOREIGN KEY (id_matriz) REFERENCES matriz,
+    FOREIGN KEY (id_reprodutor) REFERENCES reprodutor
+);
+
+
+
+
+CREATE TABLE adquirido (
+	PRIMARY KEY (identificacao),
+    nome_pai varchar(50),
+    nome_mae varchar(50),
+    valor float
+)inherits (reprodutor);
+
+
+
+
+CREATE TABLE cria(
+	PRIMARY KEY (identificacao),
+    data_desmame date
+)inherits (reprodutor);
+
+
+
+
+CREATE TABLE sequencia(
+	crm_ant int, 
+    identificacao_ant int, 
+    data_ant date,
+    crm_pos int , 
+    identificacao_pos int, 
+    data_pos date,
+    PRIMARY KEY (crm_ant, identificacao_ant, data_ant, crm_pos, identificacao_pos, data_pos),
+    FOREIGN KEY (crm_ant, identificacao_ant, data_ant) REFERENCES consulta (crm,identificacao, data) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (crm_pos, identificacao_pos, data_pos) REFERENCES consulta (crm,identificacao, data) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO veterinario VALUES (121212, 'Jao da Silva', 'UNIMED-Bov');
+
+INSERT INTO animal VALUES ('78787','Totó','Dog', 'M');
+
+INSERT INTO consulta VALUES('121212', 78787, '08/11/2018', 'Saudavel', 
+                           		array[t_tratamento'("08/11/2018", "Realizar Exames")']);
+                                
+SELECT tratamento[1].descricao FROM consulta;
+
+

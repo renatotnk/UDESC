@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Senha</title>
+   </head>
+   <body>
+      <input type="password" id="senha" placeholder="Digite sua senha...">
+      <br>
+      <button onclick="javascript: validacao(document.getElementById('senha'));">Verificar Senha</button>
+
+      <script type="text/javascript">
+         function validacao(campo){
+            if (!min_digs(campo.value)){
+               alert("Sua senha precisa ter 6 ou mais caracteres.");
+            }else if (!numeros(campo.value)){
+               alert("Sua senha precisa ter pelo menos um numero.");
+            }else if (!letra_maisc(campo.value)){
+               alert("Sua senha precisa ter pelo menos uma letra maiúscula.");
+            }else if (!char_especial(campo.value)){
+               alert("Sua senha precisa ter pelo menos um caractere especial.");
+            }else{
+               alert("Sua senha foi aceita.");
+            }
+         }
+
+         function min_digs(senha){
+            return !(senha.length < 6);
+         }
+
+         function numeros(senha){
+            return (/\d/.test(senha));
+         }
+
+         function letra_maisc(senha){
+            return !(senha == senha.toLowerCase());
+         }
+
+         function char_especial(senha){
+            var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+            return format.test(senha);
+         }
+
+
+      </script>
+   </body>
+</html>

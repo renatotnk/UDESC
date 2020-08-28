@@ -1,0 +1,13 @@
+.LC5:
+	.string	"Digite a senha do programa: "
+.LC6:
+	.string	"%d"
+.LC7:
+	.string	"%d\n\n"
+.LC8:
+	.string	"Senha correta!"
+	.align 8
+.LC9:
+	.string	"Senha incorreta!  Tentativa %d de %d.\n"
+
+<= 4
