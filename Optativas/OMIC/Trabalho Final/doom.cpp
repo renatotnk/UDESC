@@ -1,5 +1,8 @@
 //avr-g++ -Wall -Os -mmcu=atmega328p -o doom doom.cpp
 //avrdude -b 9600 -p m328p -c usbasp -e -U flash:w:doom
+
+// Rip and Tear
+
 #define F_CPU 1000000UL
 #define TIMER1_PRESCALER 8
 
