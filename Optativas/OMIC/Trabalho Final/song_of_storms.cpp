@@ -1,5 +1,8 @@
 //avr-g++ -Wall -Os -mmcu=atmega328p -o storms song_of_storms.cpp
 //avrdude -b 9600 -p m328p -c usbasp -e -U flash:w:storms
+
+// Make it Rain!
+
 #define F_CPU 1000000UL
 #define TIMER1_PRESCALER 8
 
